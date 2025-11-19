@@ -1,0 +1,619 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang-key="title">EMPRESS Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .nav-button-large {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            width: 100%;
+            text-align: left;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-button-large.active {
+            background-color: #0d9488;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.1), 0 2px 4px -1px rgba(13, 148, 136, 0.06);
+        }
+        .nav-button-large:not(.active):hover {
+            background-color: #e0f2f1;
+            color: #0d9488;
+        }
+        .tab-button.active {
+            border-color: #0d9488;
+            background-color: #f0fdfa;
+            color: #0d9488;
+            font-weight: 600;
+        }
+        .lang-button.active {
+            background-color: #f0fdfa;
+            color: #0d9488;
+            font-weight: 600;
+        }
+        /* Custom dashboard styles for hover effect */
+        .dashboard-button:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <div class="flex flex-col min-h-screen">
+        
+        <header class="bg-white shadow-md sticky top-0 z-20">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                
+                <!-- EMPRESS Text Logo and Title -->
+                <div class="flex items-center space-x-2">
+                    <div class="text-2xl md:text-3xl font-extrabold text-teal-700">EMPRESS</div>
+                    <div class="h-6 w-px bg-gray-300"></div> <!-- Divider -->
+                    <h1 class="text-xl md:text-2xl font-bold text-teal-600" data-lang-key="headerTitle">Interactive Guide</h1>
+                </div>
+                
+                <div class="flex items-center space-x-1 border border-gray-200 rounded-lg p-1">
+                    <button id="lang-en" class="lang-button px-3 py-1 rounded-md text-sm text-gray-600 transition-all" onclick="switchLanguage('en')">EN</button>
+                    <button id="lang-bn" class="lang-button px-3 py-1 rounded-md text-sm text-gray-600 transition-all" onclick="switchLanguage('bn')">বাং</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-col lg:flex-row flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            
+            <!-- Large Menu / Sidebar -->
+            <nav id="sidebar" class="w-full lg:w-64 lg:sticky lg:top-24 lg:mr-6 mb-6 lg:mb-0 lg:flex-shrink-0 bg-white lg:bg-transparent rounded-xl p-4 lg:p-0 shadow-lg lg:shadow-none">
+                <h3 class="text-lg font-semibold text-gray-700 mb-4 hidden lg:block" data-lang-key="menuHeader">Quick Access Menu</h3>
+                <div class="flex flex-col space-y-3">
+                    <button id="btn-home" class="nav-button-large text-gray-700 bg-gray-50 hover:bg-gray-200" onclick="showPane('home')">
+                        <span class="text-2xl mr-3">🏠</span> <span class="text-base font-medium" data-lang-key="navHome">Home</span>
+                    </button>
+                    <button id="btn-update" class="nav-button-large text-gray-700 bg-gray-50 hover:bg-gray-200" onclick="showPane('update')">
+                        <span class="text-2xl mr-3">📄</span> <span class="text-base font-medium" data-lang-key="navUpdate">Update Personal Info</span>
+                    </button>
+                    <button id="btn-payslip" class="nav-button-large text-gray-700 bg-gray-50 hover:bg-gray-200" onclick="showPane('payslip')">
+                        <span class="text-2xl mr-3">💰</span> <span class="text-base font-medium" data-lang-key="navPayslip">Download Payslip</span>
+                    </button>
+                    <button id="btn-contact" class="nav-button-large text-gray-700 bg-gray-50 hover:bg-gray-200" onclick="showPane('contact')">
+                        <span class="text-2xl mr-3">📞</span> <span class="text-base font-medium" data-lang-key="navContact">Quick Contact List</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <main class="lg:flex-grow lg:pl-4">
+                
+                <div id="home-pane" class="main-pane">
+                    <!-- Updated Greeting Text -->
+                    <h2 class="text-2xl font-bold mb-4" data-lang-key="homeTitle">Welcome, Dear Colleague!</h2>
+                    <p class="text-lg text-gray-600 mb-6" data-lang-key="homeIntro">
+                        This interactive guide helps you manage your HR tasks quickly. Use the **Quick Action Dashboard** below to jump directly to instructions for the most common requests.
+                    </p>
+                    
+                    <!-- UPDATED INTERACTIVE DASHBOARD -->
+                    <div class="bg-white p-6 rounded-lg shadow-xl">
+                        <h3 class="text-xl font-semibold text-center mb-4 text-teal-700" data-lang-key="dashboardTitle">Quick Action Dashboard</h3>
+                        <p class="text-sm text-gray-500 text-center mb-6" data-lang-key="dashboardDesc">Select a common action below to navigate directly to the instructions.</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            
+                            <!-- 1. Password Reset -->
+                            <button class="dashboard-button flex flex-col items-center justify-center p-6 bg-red-50 hover:bg-red-100 rounded-xl border border-red-200 transition-all shadow-md transform hover:scale-105" onclick="showPane('update'); showTab('password');">
+                                <span class="text-3xl mb-2">🔑</span>
+                                <span class="font-bold text-red-700" data-lang-key="dashPass">Password Reset</span>
+                                <span class="text-xs text-gray-500 mt-1 text-center" data-lang-key="dashPassDesc">Request EMPRESS credentials.</span>
+                            </button>
+                            
+                            <!-- 2. Profile Update -->
+                            <button class="dashboard-button flex flex-col items-center justify-center p-6 bg-amber-50 hover:bg-amber-100 rounded-xl border border-amber-200 transition-all shadow-md transform hover:scale-105" onclick="showPane('update'); showTab('profile');">
+                                <span class="text-3xl mb-2">📝</span>
+                                <span class="font-bold text-amber-700" data-lang-key="dashProfile">Profile Update</span>
+                                <span class="text-xs text-gray-500 mt-1 text-center" data-lang-key="dashProfileDesc">Change name, NID, or contact details.</span>
+                            </button>
+
+                            <!-- 3. Spouse Information -->
+                            <button class="dashboard-button flex flex-col items-center justify-center p-6 bg-pink-50 hover:bg-pink-100 rounded-xl border border-pink-200 transition-all shadow-md transform hover:scale-105" onclick="showPane('update'); showTab('spouse');">
+                                <span class="text-3xl mb-2">💍</span>
+                                <span class="font-bold text-pink-700" data-lang-key="dashSpouseHome">Spouse Info Update</span>
+                                <span class="text-xs text-gray-500 mt-1 text-center" data-lang-key="dashSpouseHomeDesc">Update name, NID, or marriage date.</span>
+                            </button>
+                            
+                            <!-- 4. Children Information -->
+                            <button class="dashboard-button flex flex-col items-center justify-center p-6 bg-purple-50 hover:bg-purple-100 rounded-xl border border-purple-200 transition-all shadow-md transform hover:scale-105" onclick="showPane('update'); showTab('children');">
+                                <span class="text-3xl mb-2">👶</span>
+                                <span class="font-bold text-purple-700" data-lang-key="dashChildrenHome">Children Info Update</span>
+                                <span class="text-xs text-gray-500 mt-1 text-center" data-lang-key="dashChildrenHomeDesc">Add or modify child records.</span>
+                            </button>
+                            
+                            <!-- 5. Payslip Download (Using 💰 emoji) -->
+                            <button class="dashboard-button flex flex-col items-center justify-center p-6 bg-teal-50 hover:bg-teal-100 rounded-xl border border-teal-200 transition-all shadow-md transform hover:scale-105" onclick="showPane('payslip');">
+                                <span class="text-3xl mb-2">💰</span>
+                                <span class="font-bold text-teal-700" data-lang-key="dashPayslip">Payslip Download</span>
+                                <span class="text-xs text-gray-500 mt-1 text-center" data-lang-key="dashPayslipDesc">Monthly salary slip process.</span>
+                            </button>
+                            
+                            <!-- 6. Other Contacts -->
+                            <button class="dashboard-button flex flex-col items-center justify-center p-6 bg-indigo-50 hover:bg-indigo-100 rounded-xl border border-indigo-200 transition-all shadow-md transform hover:scale-105" onclick="showPane('contact');">
+                                <span class="text-3xl mb-2">📞</span>
+                                <span class="font-bold text-indigo-700" data-lang-key="dashContact">Other Contacts</span>
+                                <span class="text-xs text-gray-500 mt-1 text-center" data-lang-key="dashContactDesc">Tax, Medical Bill, Payroll Card Queries.</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- END UPDATED INTERACTIVE DASHBOARD -->
+
+                </div>
+
+                <div id="update-pane" class="main-pane hidden">
+                    <h2 class="text-2xl font-bold mb-4" data-lang-key="updateTitle">Update Your Personal Information</h2>
+                    <p class="text-lg text-gray-600 mb-6" data-lang-key="updateIntro">
+                        Here you can find the exact document requirements and submission process for updating your profile, spouse, or children's information, as well as how to reset your EMPRESS password. Please select the task you need to perform.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row sm:space-x-2 mb-6">
+                        <button id="btn-spouse" class="tab-button flex-1 px-4 py-3 text-sm font-semibold text-gray-600 bg-white border-b-4 border-transparent hover:bg-gray-50 rounded-t-lg" onclick="showTab('spouse')">
+                            <span data-lang-key="tabSpouse">Spouse Info</span>
+                        </button>
+                        <button id="btn-profile" class="tab-button flex-1 px-4 py-3 text-sm font-semibold text-gray-600 bg-white border-b-4 border-transparent hover:bg-gray-50 rounded-t-lg" onclick="showTab('profile')">
+                            <span data-lang-key="tabProfile">Profile Info</span>
+                        </button>
+                        <button id="btn-children" class="tab-button flex-1 px-4 py-3 text-sm font-semibold text-gray-600 bg-white border-b-4 border-transparent hover:bg-gray-50 rounded-t-lg" onclick="showTab('children')">
+                            <span data-lang-key="tabChildren">Children Info</span>
+                        </button>
+                        <button id="btn-password" class="tab-button flex-1 px-4 py-3 text-sm font-semibold text-gray-600 bg-white border-b-4 border-transparent hover:bg-gray-50 rounded-t-lg" onclick="showTab('password')">
+                            <span data-lang-key="tabPassword">EMPRESS Password</span>
+                        </button>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-b-lg rounded-tr-lg shadow-lg">
+                        
+                        <div id="spouse-content" class="tab-pane">
+                            <h3 class="text-xl font-semibold mb-4" data-lang-key="spouseTitle">Update Spouse Name</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-semibold" data-lang-key="reqDocs">Required Documents and Data</h4>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1 mt-2">
+                                        <li data-lang-key="spouseDoc1">Spouse NID copy.</li>
+                                        <li data-lang-key="spouseDoc2">Marriage date (DD-MM-YYYY).</li>
+                                    </ul>
+                                    <div class="mt-4 border-l-4 border-amber-500 bg-amber-50 p-4 rounded-r-lg">
+                                        <strong class="text-amber-700" data-lang-key="rfRule">Important RF Number Rule:</strong>
+                                        <p class="text-sm text-amber-600" data-lang-key="rfRuleDesc">You MUST write your Employee ID (RF Number) clearly on every single document you submit.</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold" data-lang-key="submitHow">How to Submit</h4>
+                                    <p class="text-sm text-gray-500 mb-2" data-lang-key="submitDesc">Send all documents to Mr. Md. Omar Faruk Bhuiyan Shuvo.</p>
+                                    <div class="space-y-3">
+                                        <a href="mailto:omar.bhuiyan@renata-ltd.com" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all" data-lang-key="btnEmail">
+                                            Send Email (omar.bhuiyan@renata-ltd.com)
+                                        </a>
+                                        <a href="https://wa.me/8801847469456" target="_blank" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-all" data-lang-key="btnWhatsapp">
+                                            Send WhatsApp (+8801847469456)
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="profile-content" class="tab-pane hidden">
+                            <h3 class="text-xl font-semibold mb-4" data-lang-key="profileTitle">Update Profile Information</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-semibold" data-lang-key="reqDocs">Required Documents and Data</h4>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1 mt-2">
+                                        <li data-lang-key="profileDoc1">NID copy and/or Academic certificate copy.</li>
+                                        <li data-lang-key="profileDoc2">Updated email address.</li>
+                                        <li data-lang-key="profileDoc3">Updated mobile number (personal or official).</li>
+                                    </ul>
+                                    <div class="mt-4 border-l-4 border-amber-500 bg-amber-50 p-4 rounded-r-lg">
+                                        <strong class="text-amber-700" data-lang-key="rfRule">Important RF Number Rule:</strong>
+                                        <p class="text-sm text-amber-600" data-lang-key="rfRuleDesc">You MUST write your Employee ID (RF Number) clearly on every single document you submit.</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold" data-lang-key="submitHow">How to Submit</h4>
+                                    <p class="text-sm text-gray-500 mb-2" data-lang-key="submitDesc">Send all documents to Mr. Md. Omar Faruk Bhuiyan Shuvo.</p>
+                                    <div class="space-y-3">
+                                        <a href="mailto:omar.bhuiyan@renata-ltd.com" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all" data-lang-key="btnEmail">
+                                            Send Email (omar.bhuiyan@renata-ltd.com)
+                                        </a>
+                                        <a href="https://wa.me/8801847469456" target="_blank" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-all" data-lang-key="btnWhatsapp">
+                                            Send WhatsApp (+8801847469456)
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="children-content" class="tab-pane hidden">
+                            <h3 class="text-xl font-semibold mb-4" data-lang-key="childrenTitle">Update Children Information</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-semibold" data-lang-key="reqDocs">Required Documents and Data</h4>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1 mt-2">
+                                        <li data-lang-key="childDoc1">Child’s full name and date of birth.</li>
+                                        <li data-lang-key="childDoc2">Birth certificate / vaccination card / hospital birth record.</li>
+                                    </ul>
+                                    <div class="mt-4 border-l-4 border-amber-500 bg-amber-50 p-4 rounded-r-lg">
+                                        <strong class="text-amber-700" data-lang-key="rfRule">Important RF Number Rule:</strong>
+                                        <p class="text-sm text-amber-600" data-lang-key="rfRuleDesc">You MUST write your Employee ID (RF Number) clearly on every single document you submit.</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold" data-lang-key="submitHow">How to Submit</h4>
+                                    <p class="text-sm text-gray-500 mb-2" data-lang-key="submitDesc">Send all documents to Mr. Md. Omar Faruk Bhuiyan Shuvo.</p>
+                                    <div class="space-y-3">
+                                        <a href="mailto:omar.bhuiyan@renata-ltd.com" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all" data-lang-key="btnEmail">
+                                            Send Email (omar.bhuiyan@renata-ltd.com)
+                                        </a>
+                                        <a href="https://wa.me/8801847469456" target="_blank" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-all" data-lang-key="btnWhatsapp">
+                                            Send WhatsApp (+8801847469456)
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="password-content" class="tab-pane hidden">
+                            <h3 class="text-xl font-semibold mb-4" data-lang-key="passwordTitle">Request EMPRESS Password</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-semibold" data-lang-key="reqDocs">Process</h4>
+                                    <ol class="list-decimal list-inside text-gray-600 space-y-2 mt-2">
+                                        <li data-lang-key="passStep1">Send a WhatsApp message to Mr. Md. Omar Faruk Bhuiyan Shuvo.</li>
+                                        <li data-lang-key="passStep2">Provide your Employee ID (RF Number) in the message.</li>
+                                    </ol>
+                                    <div class="mt-4 border-l-4 border-red-500 bg-red-50 p-4 rounded-r-lg">
+                                        <strong class="text-red-700" data-lang-key="securityTitle">Security Warning:</strong>
+                                        <p class="text-sm text-red-600" data-lang-key="securityDesc">For password or security requests, never share your password in group chats or with anyone else.</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold" data-lang-key="submitContact">Request Contact</h4>
+                                    <p class="text-sm text-gray-500 mb-2" data-lang-key="passContactDesc">Send your request directly to:</p>
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <p class="font-bold text-lg text-teal-700">Mr. Md. Omar Faruk Bhuiyan Shuvo</p>
+                                        <p class="text-gray-600 text-sm" data-lang-key="passContactPhone">+8801847469456 (WhatsApp)</p>
+                                    </div>
+                                    <a href="https://wa.me/8801847469456?text=Requesting%20EMPRESS%20Password.%20My%20RF%20Number%20is:" target="_blank" class="block w-full text-center bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-all mt-3" data-lang-key="btnWhatsappPass">
+                                        Request Password via WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="payslip-pane" class="main-pane hidden">
+                    <h2 class="text-2xl font-bold mb-4" data-lang-key="payslipTitle">How to Download Your Payslip</h2>
+                    <p class="text-lg text-gray-600 mb-6" data-lang-key="payslipIntro">
+                        Follow these simple steps to download your monthly payslip directly from the EMPRESS web portal.
+                    </p>
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <ol class="space-y-4">
+                            <li class="flex items-center">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-sm mr-4">1</span>
+                                <span class="text-gray-700" data-lang-key="payStep1">Log in to your EMPRESS account (web).</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-sm mr-4">2</span>
+                                <span class="text-gray-700" data-lang-key="payStep2">Go to Payroll → Payslip.</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-sm mr-4">3</span>
+                                <span class="text-gray-700" data-lang-key="payStep3">Select the month.</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-sm mr-4">4</span>
+                                <span class="text-gray-700" data-lang-key="payStep4">Click View Payslip.</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="flex items-center justify-center w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-sm mr-4">5</span>
+                                <span class="text-gray-700" data-lang-key="payStep5">Click Download Payslip to save to your device.</span>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div id="contact-pane" class="main-pane hidden">
+                    <h2 class="text-2xl font-bold mb-4" data-lang-key="contactTitle">Quick Contact List</h2>
+                    <p class="text-lg text-gray-600 mb-6" data-lang-key="contactIntro">
+                        For specific queries not related to HR data updates, please contact the relevant department. Click any phone number to call directly from your mobile device.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3 text-teal-700" data-lang-key="contactCatTax">TIN / Tax</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div class="bg-white p-4 rounded-lg shadow">
+                                    <p class="font-bold text-lg" data-lang-key="taxName1">Mr. Sheak Litan Mia</p>
+                                    <p class="text-sm text-gray-500" data-lang-key="taxDept1">Finance</p>
+                                    <a href="tel:01847278683" class="text-blue-600 hover:underline">01847278683</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3 text-teal-700" data-lang-key="contactCatCard">MTB / EBL Payroll Card</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div class="bg-white p-4 rounded-lg shadow">
+                                    <p class="font-bold text-lg" data-lang-key="cardName1">Mr. Md. Salauddin Chowdhury</p>
+                                    <p class="text-sm text-gray-500" data-lang-key="cardDept1">Finance</p>
+                                    <a href="tel:01847128119" class="text-blue-600 hover:underline">01847128119</a>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow">
+                                    <p class="font-bold text-lg" data-lang-key="cardName2">Ms. Sultana Ferdush</p>
+                                    <p class="text-sm text-gray-500" data-lang-key="cardDept2">Finance</p>
+                                    <a href="tel:01847432332" class="text-blue-600 hover:underline">01847432332</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3 text-teal-700" data-lang-key="contactCatMedical">Medical Bill</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div class="bg-white p-4 rounded-lg shadow">
+                                    <p class="font-bold text-lg" data-lang-key="medName1">Mr. Mohammed Habibullah</p>
+                                    <p class="text-sm text-gray-500" data-lang-key="medDept1">Medical Affairs</p>
+                                    <a href="tel:01833324650" class="text-blue-600 hover:underline">01833324650</a>
+                                </div>
+                                <div class="bg-white p-4 rounded-lg shadow">
+                                    <p class="font-bold text-lg" data-lang-key="medName2">Md. Omar Sharif Bhuiyan</p>
+                                    <p class="text-sm text-gray-500" data-lang-key="medDept2">Finance</p>
+                                    <a href="tel:01847128126" class="text-blue-600 hover:underline">01847128126</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3 text-teal-700" data-lang-key="contactCatBank">Bank Info / R-Expense</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div class="bg-white p-4 rounded-lg shadow">
+                                    <p class="font-bold text-lg" data-lang-key="bankName1">Mr. Md. Imtiaz Karim</p>
+                                    <p class="text-sm text-gray-500" data-lang-key="bankDept1">Finance</p>
+                                    <a href="tel:01844097539" class="text-blue-600 hover:underline">01844097539</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+        </div>
+
+        <footer class="text-center py-6 mt-8 bg-white border-t border-gray-200">
+            <p class="text-sm text-gray-500" data-lang-key="footer">© 2025 Renata PLC | Field HR Operations</p>
+        </footer>
+    </div>
+
+    <script>
+        const languageStrings = {
+            'en': {
+                'title': 'EMPRESS Interactive Guide',
+                'headerTitle': 'Interactive Guide',
+                'menuHeader': 'Quick Access Menu',
+                'navHome': 'Home',
+                'navUpdate': 'Update Personal Info',
+                'navPayslip': 'Download Payslip',
+                'navContact': 'Quick Contact List',
+                // Updated Greeting
+                'homeTitle': 'Welcome, Dear Colleague!', 
+                'homeIntro': 'This interactive guide helps you manage your HR tasks quickly. Use the Quick Action Dashboard below to jump directly to instructions for the most common requests.',
+                'dashboardTitle': 'Quick Action Dashboard',
+                'dashboardDesc': 'Select a common action below to navigate directly to the instructions.',
+                'dashPass': 'Password Reset',
+                'dashPassDesc': 'Request EMPRESS credentials.',
+                'dashProfile': 'Profile Update',
+                'dashProfileDesc': 'Change name, NID, or contact details.',
+                'dashSpouseHome': 'Spouse Info Update',
+                'dashSpouseHomeDesc': 'Update name, NID, or marriage date.',
+                'dashChildrenHome': 'Children Info Update',
+                'dashChildrenHomeDesc': 'Add or modify child records.',
+                'dashPayslip': 'Payslip Download',
+                'dashPayslipDesc': 'Monthly salary slip process.',
+                'dashContact': 'Other Contacts',
+                'dashContactDesc': 'Tax, Medical Bill, Payroll Card Queries.', 
+                'updateTitle': 'Update Your Personal Information',
+                'updateIntro': "Here you can find the exact document requirements and submission process for updating your profile, spouse, or children's information, as well as how to reset your EMPRESS password. Please select the task you need to perform.",
+                'tabSpouse': 'Spouse Info',
+                'tabProfile': 'Profile Info',
+                'tabChildren': 'Children Info',
+                'tabPassword': 'EMPRESS Password',
+                'spouseTitle': 'Update Spouse Name',
+                'reqDocs': 'Required Documents and Data', 
+                'spouseDoc1': 'Spouse NID copy.',
+                'spouseDoc2': 'Marriage date (DD-MM-YYYY).',
+                'rfRule': 'Important RF Number Rule:',
+                'rfRuleDesc': 'You MUST write your Employee ID (RF Number) clearly on every single document you submit.',
+                'submitHow': 'How to Submit',
+                'submitDesc': 'Send all documents to Mr. Md. Omar Faruk Bhuiyan Shuvo.',
+                'btnEmail': 'Send Email (omar.bhuiyan@renata-ltd.com)',
+                'btnWhatsapp': 'Send WhatsApp (+8801847469456)',
+                'profileTitle': 'Update Profile Information',
+                'profileDoc1': 'NID copy and/or Academic certificate copy.',
+                'profileDoc2': 'Updated email address.',
+                'profileDoc3': 'Updated mobile number (personal or official).',
+                'childrenTitle': 'Update Children Information',
+                'childDoc1': "Child’s full name and date of birth.",
+                'childDoc2': 'Birth certificate / vaccination card / hospital birth record.',
+                'passwordTitle': 'Request EMPRESS Password',
+                'passStep1': 'Send a WhatsApp message to Mr. Md. Omar Faruk Bhuiyan Shuvo.',
+                'passStep2': 'Provide your Employee ID (RF Number) in the message.',
+                'securityTitle': 'Security Warning:',
+                'securityDesc': 'For password or security requests, never share your password in group chats or with anyone else.',
+                'submitContact': 'Request Contact',
+                'passContactDesc': 'Send your request directly to:',
+                'passContactPhone': '+8801847469456 (WhatsApp)',
+                'btnWhatsappPass': 'Request Password via WhatsApp',
+                'payslipTitle': 'How to Download Your Payslip',
+                'payslipIntro': 'Follow these simple steps to download your monthly payslip directly from the EMPRESS web portal.',
+                'payStep1': 'Log in to your EMPRESS account (web).',
+                'payStep2': 'Go to Payroll → Payslip.',
+                'payStep3': 'Select the month.',
+                'payStep4': 'Click View Payslip.',
+                'payStep5': 'Click Download Payslip to save to your device.',
+                'contactTitle': 'Quick Contact List',
+                'contactIntro': 'For specific queries not related to HR data updates, please contact the relevant department. Click any phone number to call directly from your mobile device.',
+                'contactCatTax': 'TIN / Tax',
+                'taxName1': 'Mr. Sheak Litan Mia',
+                'taxDept1': 'Finance',
+                'contactCatCard': 'MTB / EBL Payroll Card',
+                'cardName1': 'Mr. Md. Salauddin Chowdhury',
+                'cardDept1': 'Finance',
+                'cardName2': 'Ms. Sultana Ferdush',
+                'cardDept2': 'Finance',
+                'contactCatMedical': 'Medical Bill',
+                'medName1': 'Mr. Mohammed Habibullah',
+                'medDept1': 'Medical Affairs',
+                'medName2': 'Md. Omar Sharif Bhuiyan',
+                'medDept2': 'Finance',
+                'contactCatBank': 'Bank Info / R-Expense',
+                'bankName1': 'Mr. Md. Imtiaz Karim',
+                'bankDept1': 'Finance',
+                'footer': '© 2025 Renata PLC | Field HR Operations'
+            },
+            'bn': {
+                'title': 'EMPRESS ইন্টারেক্টিভ গাইড',
+                'headerTitle': 'ইন্টারেক্টিভ গাইড',
+                'menuHeader': 'দ্রুত অ্যাক্সেস মেনু',
+                'navHome': 'হোম',
+                'navUpdate': 'ব্যক্তিগত তথ্য আপডেট',
+                'navPayslip': 'পে-স্লিপ ডাউনলোড',
+                'navContact': 'জরুরী যোগাযোগ তালিকা',
+                // Updated Greeting (Translation of "Welcome, Dear Colleague!")
+                'homeTitle': 'স্বাগতম, প্রিয় সহকর্মী!',
+                'homeIntro': 'এই ইন্টারেক্টিভ গাইডটি আপনাকে আপনার HR কাজগুলি দ্রুত পরিচালনা করতে সহায়তা করে। সবচেয়ে সাধারণ অনুরোধের নির্দেশাবলীতে সরাসরি যেতে নিচে থাকা দ্রুত পদক্ষেপ ড্যাশবোর্ডটি ব্যবহার করুন।',
+                'dashboardTitle': 'দ্রুত পদক্ষেপ ড্যাশবোর্ড',
+                'dashboardDesc': 'নির্দেশাবলীতে সরাসরি যেতে নিচে একটি সাধারণ পদক্ষেপ নির্বাচন করুন।',
+                'dashPass': 'পাসওয়ার্ড রিসেট',
+                'dashPassDesc': 'EMPRESS ক্রেডেনশিয়াল অনুরোধ করুন।',
+                'dashProfile': 'প্রোফাইল আপডেট',
+                'dashProfileDesc': 'নাম, NID, বা যোগাযোগের বিবরণ পরিবর্তন করুন।',
+                'dashSpouseHome': 'স্ত্রীর তথ্য আপডেট',
+                'dashSpouseHomeDesc': 'নাম, NID, বা বিবাহের তারিখ আপডেট করুন।',
+                'dashChildrenHome': 'সন্তানের তথ্য আপডেট',
+                'dashChildrenHomeDesc': 'সন্তানের রেকর্ড যোগ বা পরিবর্তন করুন।',
+                'dashPayslip': 'পে-স্লিপ ডাউনলোড',
+                'dashPayslipDesc': 'মাসিক বেতন স্লিপ প্রক্রিয়া।',
+                'dashContact': 'অন্যান্য যোগাযোগ',
+                'dashContactDesc': 'কর, মেডিকেল বিল, পে-রোল কার্ড সম্পর্কিত প্রশ্ন।', 
+                'updateTitle': 'আপনার ব্যক্তিগত তথ্য আপডেট করুন',
+                'updateIntro': 'এখানে আপনি আপনার প্রোফাইল, স্ত্রী বা সন্তানদের তথ্য আপডেট করার জন্য প্রয়োজনীয় ডকুমেন্ট এবং জমা দেওয়ার প্রক্রিয়া খুঁজে পেতে পারেন, সেইসাথে কীভাবে আপনার EMPRESS পাসওয়ার্ড রিসেট করবেন। অনুগ্রহ করে আপনার প্রয়োজনীয় কাজটি নির্বাচন করুন।',
+                'tabSpouse': 'স্ত্রীর তথ্য',
+                'tabProfile': 'প্রোফাইল তথ্য',
+                'tabChildren': 'সন্তানের তথ্য',
+                'tabPassword': 'EMPRESS পাসওয়ার্ড',
+                'spouseTitle': 'স্ত্রীর নাম আপডেট করুন',
+                'reqDocs': 'প্রয়োজনীয় ডকুমেন্ট এবং তথ্য', 
+                'spouseDoc1': 'স্ত্রীর NID কপি।',
+                'spouseDoc2': 'বিবাহের তারিখ (DD-MM-YYYY)।',
+                'rfRule': 'গুরুত্বপূর্ণ RF নম্বর নিয়ম:',
+                'rfRuleDesc': 'আপনাকে অবশ্যই আপনার জমা দেওয়া প্রতিটি ডকুমেন্টে আপনার কর্মকর্তা আইডি (RF নম্বর) স্পষ্টভাবে লিখতে হবে।',
+                'submitHow': 'কিভাবে জমা দেবেন',
+                'submitDesc': 'সমস্ত ডকুমেন্ট পাঠান Mr. Md. Omar Faruk Bhuiyan Shuvo-কে।',
+                'btnEmail': 'ইমেল পাঠান (omar.bhuiyan@renata-ltd.com)',
+                'btnWhatsapp': 'হোয়াটসঅ্যাপ পাঠান (+8801847469456)',
+                'profileTitle': 'প্রোফাইল তথ্য আপডেট করুন',
+                'profileDoc1': 'NID কপি এবং/অথবা শিক্ষা সনদ কপি।',
+                'profileDoc2': 'আপডেট করা ইমেল ঠিকানা।',
+                'profileDoc3': 'আপডেট করা মোবাইল নম্বর (ব্যক্তিগত বা অফিসিয়াল)।',
+                'childrenTitle': 'সন্তানের তথ্য আপডেট করুন',
+                'childDoc1': 'সন্তানের পুরো নাম এবং জন্ম তারিখ।',
+                'childDoc2': 'জন্ম সনদ / টিকা কার্ড / হাসপাতালের জন্ম রেকর্ড।',
+                'passwordTitle': 'EMPRESS পাসওয়ার্ড অনুরোধ করুন',
+                'passStep1': 'Mr. Md. Omar Faruk Bhuiyan Shuvo-কে একটি হোয়াটসঅ্যাপ বার্তা পাঠান।',
+                'passStep2': 'বার্তায় আপনার কর্মকর্তা আইডি (RF নম্বর) সরবরাহ করুন।',
+                'securityTitle': 'নিরাপত্তা সতর্কতা:',
+                'securityDesc': 'পাসওয়ার্ড বা নিরাপত্তা অনুরোধের জন্য, কখনও গ্রুপ চ্যাটে বা অন্য কারও সাথে আপনার পাসওয়ার্ড শেয়ার করবেন না।',
+                'submitContact': 'অনুরোধের জন্য যোগাযোগ',
+                'passContactDesc': 'আপনার অনুরোধ সরাসরি পাঠান:',
+                'passContactPhone': '+8801847469456 (হোয়াটসঅ্যাপ)',
+                'btnWhatsappPass': 'হোয়াটসঅ্যাপের মাধ্যমে পাসওয়ার্ড অনুরোধ করুন',
+                'payslipTitle': 'কিভাবে আপনার পে-স্লিপ ডাউনলোড করবেন',
+                'payslipIntro': 'EMPRESS ওয়েব পোর্টাল থেকে সরাসরি আপনার মাসিক পে-স্লিপ ডাউনলোড করতে এই সহজ পদক্ষেপগুলি অনুসরণ করুন।',
+                'payStep1': 'আপনার EMPRESS অ্যাকাউন্টে (ওয়েব) লগ ইন করুন।',
+                'payStep2': 'Go to Payroll → Payslip.',
+                'payStep3': 'মাস নির্বাচন করুন।',
+                'payStep4': 'View Payslip-এ ক্লিক করুন।',
+                'payStep5': 'Download Payslip-এ ক্লিক করুন।',
+                'contactTitle': 'জরুরী যোগাযোগ তালিকা',
+                'contactIntro': 'HR ডেটা আপডেট সম্পর্কিত নয় এমন নির্দিষ্ট প্রশ্নের জন্য, অনুগ্রহ করে সংশ্লিষ্ট বিভাগে যোগাযোগ করুন। আপনার মোবাইল ডিভাইস থেকে সরাসরি কল করতে যেকোনো ফোন নম্বরে ক্লিক করুন।',
+                'contactCatTax': 'TIN / কর',
+                'taxName1': 'Mr. Sheak Litan Mia',
+                'taxDept1': 'Finance',
+                'contactCatCard': 'MTB / EBL পে-রোল কার্ড',
+                'cardName1': 'Mr. Md. Salauddin Chowdhury',
+                'cardDept1': 'Finance',
+                'cardName2': 'Ms. Sultana Ferdush',
+                'cardDept2': 'Finance',
+                'contactCatMedical': 'মেডিকেল বিল',
+                'medName1': 'Mr. Mohammed Habibullah',
+                'medDept1': 'Medical Affairs',
+                'medName2': 'Md. Omar Sharif Bhuiyan',
+                'medDept2': 'Finance',
+                'contactCatBank': 'ব্যাংক তথ্য / R-Expense',
+                'bankName1': 'Mr. Md. Imtiaz Karim',
+                'bankDept1': 'Finance',
+                'footer': '© ২০২৫ রেনাটা পিএলসি | ফিল্ড এইচআর অপারেশনস'
+            }
+        };
+
+        const mainPanes = document.querySelectorAll('.main-pane');
+        const navButtons = document.querySelectorAll('.nav-button-large');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const langButtons = document.querySelectorAll('.lang-button');
+
+        function showPane(paneId) {
+            mainPanes.forEach(pane => {
+                pane.classList.toggle('hidden', pane.id !== `${paneId}-pane`);
+            });
+            navButtons.forEach(button => {
+                button.classList.toggle('active', button.id === `btn-${paneId}`);
+            });
+        }
+
+        function showTab(tabId) {
+            tabPanes.forEach(pane => {
+                pane.classList.toggle('hidden', pane.id !== `${tabId}-content`);
+            });
+            tabButtons.forEach(button => {
+                button.classList.toggle('active', button.id === `btn-${tabId}`);
+            });
+        }
+
+        function switchLanguage(lang) {
+            const strings = languageStrings[lang];
+            document.documentElement.lang = lang;
+            
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if (strings[key]) {
+                    el.innerHTML = strings[key];
+                }
+            });
+
+            langButtons.forEach(button => {
+                button.classList.toggle('active', button.id === `lang-${lang}`);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize with English and show the home pane
+            switchLanguage('en'); 
+            showPane('home');
+            showTab('spouse'); // Initialize the update sub-tab
+        });
+    </script>
+</body>
+</html>
